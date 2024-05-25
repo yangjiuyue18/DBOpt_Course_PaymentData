@@ -1,7 +1,7 @@
 IF DB_NAME() <> N'PaymentData' SET NOEXEC ON;
 GO
 
--- ดดฝจตวยผร๛บอำรปง
+-- ๅๅปบ็ปๅฝ•ๅๅ’็”จๆท
 IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = N'OperatorLogin')
     CREATE LOGIN OperatorLogin WITH PASSWORD = 'StrongPassword1!';
 GO
@@ -21,7 +21,7 @@ IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'AnalystUser'
     CREATE USER AnalystUser FOR LOGIN AnalystLogin;
 GO
 
--- ดดฝจฝวษซ งณงเงูงีงังÛงไงึ งแงึงโงใงเง฿งังุงั
+-- ๅๅปบ่ง’่ฒ ะกะพะทะดะฐะนัะต ะฟะตั€ัะพะฝะฐะถะฐ
 IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'Operator')
     CREATE ROLE Operator;
 GO
@@ -30,18 +30,18 @@ IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'Analyst')
     CREATE ROLE Analyst;
 GO
 
--- ฮชฝวษซทึลไศจฯÞ งฏงังูง฿งัง้งึง฿งฺงึ งโงังูงโงึง๊งึง฿งฺงÛ งโงเงÝง๑งÞ
+-- ไธบ่ง’่ฒๅ้…ๆ้ ะะฐะทะฝะฐัะตะฝะธะต ั€ะฐะทั€ะตัะตะฝะธะน ั€ะพะปัะผ
 GRANT INSERT, UPDATE, DELETE ON dbo.Payment TO Operator;
 GRANT SELECT ON dbo.Payment TO Analyst;
 GRANT SELECT ON dbo.PaymentParticipant TO Analyst;
 GO
 
--- ฝซำรปงฬํผำตฝฝวษซ  งณงเงูงีงังÛงไงึ งแงึงโงใงเง฿งังุงั
+-- ๅฐ็”จๆทๆทปๅ ๅฐ่ง’่ฒ  ะกะพะทะดะฐะนัะต ะฟะตั€ัะพะฝะฐะถะฐ
 ALTER ROLE Operator ADD MEMBER OperatorUser;
 ALTER ROLE Analyst ADD MEMBER AnalystUser;
 GO
 
--- ดดฝจ BalanceChanges ฑํ งณงเงูงีงัง฿งฺงึ งไงังางÝงฺง่งํ BalanceChanges
+-- ๅๅปบ BalanceChanges ่กจ ะกะพะทะดะฐะฝะธะต ัะฐะฑะปะธัั BalanceChanges
 IF OBJECT_ID(N'dbo.BalanceChanges', 'U') IS NULL
 CREATE TABLE dbo.BalanceChanges (
   ChangeID INT IDENTITY(1,1) PRIMARY KEY,
@@ -53,13 +53,13 @@ CREATE TABLE dbo.BalanceChanges (
 GO
 
 /*
-"chatgpt" งฺงใงแงเงÝง๎งูงๅงึงไงใง๑ งแงโงฺ งใงเงูงีงัง฿งฺงฺ งไงโงฺงิงิงึงโงเงำ งฺ งแงโงฺ งใงเงูงีงัง฿งฺงฺ ง็งโงัง฿งฺงÞงเงÛ 
-งแงโงเง่งึงีงๅงโงํ updataBalances table, งใ งแงโงึงีงÝงเงุงึง฿งฺงึงÞ งำงำงึงใงไงฺ งำ งางังูงๅ งีงัง฿ง฿งํง็ งีงำงึ งโงเงÝงฺ งฺ งีงังไง๎ 
-งโงึง๊งึง฿งฺงึ งีงÝง๑ งเงไงใงโงเง้งÜงฺ งโงังใง้งึงไงั งเงใงไงังไงÜงเงำ.
+"chatgpt" ะธัะฟะพะปัะทัะตััั ะฟั€ะธ ัะพะทะดะฐะฝะธะธ ัั€ะธะณะณะตั€ะพะฒ ะธ ะฟั€ะธ ัะพะทะดะฐะฝะธะธ ั…ั€ะฐะฝะธะผะพะน 
+ะฟั€ะพัะตะดัั€ั updataBalances table, ั ะฟั€ะตะดะปะพะถะตะฝะธะตะผ ะฒะฒะตััะธ ะฒ ะฑะฐะทั ะดะฐะฝะฝัั… ะดะฒะต ั€ะพะปะธ ะธ ะดะฐัั 
+ั€ะตัะตะฝะธะต ะดะปั ะพััั€ะพัะบะธ ั€ะฐััะตัะฐ ะพััะฐัะบะพะฒ.
 */
 
 
--- ดดฝจดฅทขฦ๗ผวยผฑไธüสýพÝ งณงเงูงีงัง฿งฺงึ งไงโงฺงิงิงึงโงเงำ งีงÝง๑ งูงังแงฺงใงฺ งฺงูงÞงึง฿งึง฿ง฿งํง็ งีงัง฿ง฿งํง็
+-- ๅๅปบ่งฆๅ‘ๅจ่ฎฐๅฝ•ๅๆดๆ•ฐๆฎ ะกะพะทะดะฐะฝะธะต ัั€ะธะณะณะตั€ะพะฒ ะดะปั ะทะฐะฟะธัะธ ะธะทะผะตะฝะตะฝะฝัั… ะดะฐะฝะฝัั…
 IF OBJECT_ID(N'dbo.trg_payment_insert', 'TR') IS NULL
 EXEC sp_executesql N'CREATE OR ALTER TRIGGER trg_payment_insert
 ON dbo.Payment
@@ -67,7 +67,7 @@ AFTER INSERT
 AS
 BEGIN
   INSERT INTO dbo.BalanceChanges (PaymentID, OldBalance, NewBalance)
-  SELECT i.Oid, NULL, NULL -- ะÞธฤฮชีýศทตฤมะร๛ป๒ศฅต๔ดหดฆ
+  SELECT i.Oid, NULL, NULL -- ไฟฎๆ”นไธบๆญฃ็กฎ็ๅ—ๅๆ–ๅปๆๆญคๅค
   FROM inserted i;
 END';
 GO
@@ -79,13 +79,13 @@ AFTER UPDATE
 AS
 BEGIN
   INSERT INTO dbo.BalanceChanges (PaymentID, OldBalance, NewBalance)
-  SELECT i.Oid, NULL, NULL -- ะÞธฤฮชีýศทตฤมะร๛ป๒ศฅต๔ดหดฆ
+  SELECT i.Oid, NULL, NULL -- ไฟฎๆ”นไธบๆญฃ็กฎ็ๅ—ๅๆ–ๅปๆๆญคๅค
   FROM inserted i
   JOIN deleted d ON i.Oid = d.Oid;
 END';
 GO
 
--- ดดฝจดๆดขนýณฬ UpdateBalances  งณงเงูงีงังÛงไงึ งแงโงเง่งึงีงๅงโงๅ UpdateBalances
+-- ๅๅปบๅญๅจ่ฟ็จ UpdateBalances  ะกะพะทะดะฐะนัะต ะฟั€ะพัะตะดัั€ั UpdateBalances
 IF OBJECT_ID(N'dbo.UpdateBalances', 'P') IS NULL
 EXEC sp_executesql N'CREATE OR ALTER PROCEDURE dbo.UpdateBalances
 AS
@@ -100,7 +100,7 @@ BEGIN
 END';
 GO
 
--- ฐฒลลถจสฑศฮฮ๑ UpdateBalancesJob  งฑงÝงัง฿งฺงโงเงำงัง฿งฺงึ งูงังีงัง้ งแงเ งำงโงึงÞงึง฿งฺ UpdateBalancesJob
+-- ๅฎๆ’ๅฎๆ—ถไปปๅก UpdateBalancesJob  ะะปะฐะฝะธั€ะพะฒะฐะฝะธะต ะทะฐะดะฐั ะฟะพ ะฒั€ะตะผะตะฝะธ UpdateBalancesJob
 USE msdb;
 GO
 
@@ -114,7 +114,7 @@ BEGIN
 END;
 GO
 
--- ฦ๔ถฏถจสฑศฮฮ๑ งฉงังแงๅงใงÜ งูงังีงัง฿งฺง๑ งใ งไงังÛงÞงึงโงเงÞ
+-- ๅฏๅจๅฎๆ—ถไปปๅก ะ—ะฐะฟััะบ ะทะฐะดะฐะฝะธั ั ัะฐะนะผะตั€ะพะผ
 IF NOT EXISTS (SELECT 1 FROM msdb.dbo.sysjobs_view WHERE name = N'UpdateBalancesJob' AND enabled = 1)
 BEGIN
   EXEC msdb.dbo.sp_start_job @job_name = N'UpdateBalancesJob';

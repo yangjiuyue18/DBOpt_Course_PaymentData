@@ -1,9 +1,9 @@
--- ¿ªÆôÊ±¼äÍ³¼Æ    
+-- å¼€å¯æ—¶é—´ç»Ÿè®¡    
 SET STATISTICS TIME ON;    
--- ¿ªÆôI/OÍ³¼Æ£¨¿ÉÑ¡£¬ÓÃÓÚ²é¿´ÎïÀíI/O£©    
+-- å¼€å¯I/Oç»Ÿè®¡ï¼ˆå¯é€‰ï¼Œç”¨äºæŸ¥çœ‹ç‰©ç†I/Oï¼‰    
 -- SET STATISTICS IO ON;    
     
--- ²åÈë´óÁ¿Êı¾İ    
+-- æ’å…¥å¤§é‡æ•°æ®    
 DECLARE @startTime DATETIME = GETDATE();    
 -- Insert Payment data  
 ;WITH Numbers AS (    
@@ -14,7 +14,7 @@ DECLARE @startTime DATETIME = GETDATE();
     CROSS JOIN    
         master.sys.all_objects AS Objects2    
     CROSS JOIN    
-        master.sys.all_objects AS Objects3  -- Èç¹ûĞèÒª¸ü¶àĞĞ£¬¿ÉÒÔÔÙ¼ÓCROSS JOIN  
+        master.sys.all_objects AS Objects3  -- å¦‚æœéœ€è¦æ›´å¤šè¡Œï¼Œå¯ä»¥å†åŠ CROSS JOIN  
 )    
 INSERT INTO dbo.Payment (Oid, Amount, Category, Project, Payer, Payee, Date, OptimisticLockField, GCRecord)  
 SELECT    
@@ -30,42 +30,42 @@ SELECT
 FROM    
     Numbers    
 WHERE    
-    RowNum BETWEEN 1 AND 10000; -- Éú³É10,000Ìõ²âÊÔÖ§¸¶¼ÇÂ¼  
+    RowNum BETWEEN 1 AND 10000; -- ç”Ÿæˆ10,000æ¡æµ‹è¯•æ”¯ä»˜è®°å½•  
   
 PRINT 'test insert data';         
     
 DECLARE @endTime DATETIME = GETDATE();    
-PRINT '§£§ã§ä§Ñ§Ó§Ü§Ñ §Ù§Ñ§ß§Ú§Ş§Ñ§Ö§ä(²åÈëºÄÊ±): ' + CAST(DATEDIFF(MILLISECOND, @startTime, @endTime) / 1000.0 AS NVARCHAR) + ' s';  -- ĞŞ¸ÄÕâÀï£¬½«ºÁÃëÊı³ıÒÔ1000µÃµ½ÃëÊı  
+PRINT 'Ğ’ÑÑ‚Ğ°Ğ²ĞºĞ° Ğ·Ğ°Ğ½Ğ¸Ğ¼Ğ°ĞµÑ‚(æ’å…¥è€—æ—¶): ' + CAST(DATEDIFF(MILLISECOND, @startTime, @endTime) / 1000.0 AS NVARCHAR) + ' s';  -- ä¿®æ”¹è¿™é‡Œï¼Œå°†æ¯«ç§’æ•°é™¤ä»¥1000å¾—åˆ°ç§’æ•°  
     
 DECLARE @TestCounter INT = 0;  
-DECLARE @TotalTests INT = 2; -- Éè¶¨²âÊÔ´ÎÊı  
+DECLARE @TotalTests INT = 2; -- è®¾å®šæµ‹è¯•æ¬¡æ•°  
 DECLARE @RandomPayer uniqueidentifier, @RandomPayee uniqueidentifier, @RandomProject uniqueidentifier;   
   
 WHILE @TestCounter < @TotalTests  
 BEGIN  
-    -- Ëæ»úÑ¡Ôñ Payer, Payee, ºÍ Project  
+    -- éšæœºé€‰æ‹© Payer, Payee, å’Œ Project  
     SELECT TOP 1 @RandomPayer = Payer FROM dbo.Payment ORDER BY NEWID();  
     SELECT TOP 1 @RandomPayee = Payee FROM dbo.Payment WHERE Payer = @RandomPayer ORDER BY NEWID();  
     SELECT TOP 1 @RandomProject = Project FROM dbo.Payment WHERE Payer = @RandomPayer AND Payee = @RandomPayee ORDER BY NEWID();  
       
-    -- ¼ÇÂ¼¿ªÊ¼Ê±¼ä  
+    -- è®°å½•å¼€å§‹æ—¶é—´  
     SET @startTime = GETDATE();  
       
-    -- Ö´ĞĞ¸üĞÂ²Ù×÷  
+    -- æ‰§è¡Œæ›´æ–°æ“ä½œ  
     UPDATE dbo.Payment  
-    SET Amount = Amount + 100 -- ¼ÙÉèÎÒÃÇ¸ø·ûºÏÌõ¼şµÄÃ¿Ìõ¼ÇÂ¼µÄAmountÔö¼Ó100  
+    SET Amount = Amount + 100 -- å‡è®¾æˆ‘ä»¬ç»™ç¬¦åˆæ¡ä»¶çš„æ¯æ¡è®°å½•çš„Amountå¢åŠ 100  
     WHERE Payer = @RandomPayer  
       AND Payee = @RandomPayee  
       AND Project = @RandomProject;  
       
-    -- ¼ÇÂ¼½áÊøÊ±¼ä²¢´òÓ¡ºÄÊ±  
+    -- è®°å½•ç»“æŸæ—¶é—´å¹¶æ‰“å°è€—æ—¶  
     SET @endTime = GETDATE();  
-    PRINT '§°§á§Ö§â§Ñ§è§Ú§ñ §à§Ò§ß§à§Ó§İ§Ö§ß§Ú§ñ §Ù§Ñ§ß§Ú§Ş§Ñ§Ö§ä(¸üĞÂ²Ù×÷ºÄÊ±): ' + CAST(DATEDIFF(MILLISECOND, @startTime, @endTime) / 1000.0 AS NVARCHAR) + ' s';  
+    PRINT 'ĞĞ¿ĞµÑ€Ğ°Ñ†Ğ¸Ñ Ğ¾Ğ±Ğ½Ğ¾Ğ²Ğ»ĞµĞ½Ğ¸Ñ Ğ·Ğ°Ğ½Ğ¸Ğ¼Ğ°ĞµÑ‚(æ›´æ–°æ“ä½œè€—æ—¶): ' + CAST(DATEDIFF(MILLISECOND, @startTime, @endTime) / 1000.0 AS NVARCHAR) + ' s';  
       
-    -- ×¼±¸ÏÂÒ»´ÎÑ­»·  
+    -- å‡†å¤‡ä¸‹ä¸€æ¬¡å¾ªç¯  
     SET @TestCounter = @TestCounter + 1;  
 END  
   
--- ¹Ø±ÕÊ±¼äºÍI/OÍ³¼Æ  
+-- å…³é—­æ—¶é—´å’ŒI/Oç»Ÿè®¡  
 SET STATISTICS TIME OFF;  
 -- SET STATISTICS IO OFF;

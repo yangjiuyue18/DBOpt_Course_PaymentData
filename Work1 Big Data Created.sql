@@ -89,12 +89,12 @@ INSERT INTO dbo.PaymentCategory (Oid, Name, OptimisticLockField, GCRecord, Profi
 VALUES 
 (NEWID(), 'Material Costs', 0, NULL, 1, 0),
 (NEWID(), 'Labor Costs', 0, NULL, 0, 1),
-(NEWID(), 'Overhead Costs', 0, NULL, 0, 0),    -- ¼ä½Ó·ÑÓÃ  
-(NEWID(), 'Marketing and Advertising', 0, NULL, 0, 0),    -- ÊĞ³¡ÓªÏúºÍ¹ã¸æ·ÑÓÃ  
-(NEWID(), 'Shipping and Handling', 0, NULL, 0, 1),    -- ÔËÊäºÍ´¦Àí·ÑÓÃ  
-(NEWID(), 'Taxes and Fees', 0, NULL, 0, 1),    -- Ë°·Ñ  
-(NEWID(), 'Research and Development', 0, NULL, 0, 1),    -- ÑĞ·¢³É±¾  
-(NEWID(), 'Rent and Utilities', 0, NULL, 0, 1);    -- ×â½ğºÍ¹«¹²ÉèÊ©·ÑÓÃ;
+(NEWID(), 'Overhead Costs', 0, NULL, 0, 0),    -- é—´æ¥è´¹ç”¨  
+(NEWID(), 'Marketing and Advertising', 0, NULL, 0, 0),    -- å¸‚åœºè¥é”€å’Œå¹¿å‘Šè´¹ç”¨  
+(NEWID(), 'Shipping and Handling', 0, NULL, 0, 1),    -- è¿è¾“å’Œå¤„ç†è´¹ç”¨  
+(NEWID(), 'Taxes and Fees', 0, NULL, 0, 1),    -- ç¨è´¹  
+(NEWID(), 'Research and Development', 0, NULL, 0, 1),    -- ç ”å‘æˆæœ¬  
+(NEWID(), 'Rent and Utilities', 0, NULL, 0, 1);    -- ç§Ÿé‡‘å’Œå…¬å…±è®¾æ–½è´¹ç”¨;
 
 -- Insert Payment data  
 ;WITH Numbers AS (    
@@ -105,7 +105,7 @@ VALUES
     CROSS JOIN    
         master.sys.all_objects AS Objects2    
     CROSS JOIN    
-        master.sys.all_objects AS Objects3  -- Èç¹ûĞèÒª¸ü¶àĞĞ£¬¿ÉÒÔÔÙ¼ÓCROSS JOIN  
+        master.sys.all_objects AS Objects3  -- å¦‚æœéœ€è¦æ›´å¤šè¡Œï¼Œå¯ä»¥å†åŠ CROSS JOIN  
 )    
 INSERT INTO dbo.Payment (Oid, Amount, Category, Project, Payer, Payee, Date, OptimisticLockField, GCRecord)  
 SELECT    
@@ -121,7 +121,7 @@ SELECT
 FROM    
     Numbers    
 WHERE    
-    RowNum BETWEEN 1 AND 40000; -- Éú³É40,000Ìõ²âÊÔÖ§¸¶¼ÇÂ¼  
+    RowNum BETWEEN 1 AND 40000; -- ç”Ÿæˆ40,000æ¡æµ‹è¯•æ”¯ä»˜è®°å½•  
   
 PRINT 'Test data insertion completed';  
 GO

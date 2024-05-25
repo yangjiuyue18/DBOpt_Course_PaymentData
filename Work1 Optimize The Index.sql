@@ -1,10 +1,10 @@
--- ´´½¨ÁªºÏË÷Òı [ix_Payment_Payer_Payee_Project] °üº¬ Payer¡¢Payee ºÍ Project ÁĞ
+-- åˆ›å»ºè”åˆç´¢å¼• [ix_Payment_Payer_Payee_Project] åŒ…å« Payerã€Payee å’Œ Project åˆ—
 CREATE NONCLUSTERED INDEX ix_Payment_Payer_Payee_Project
 ON dbo.Payment (Payer, Payee, Project)
 INCLUDE (Amount, Category, Justification, Comment, Date)
 ON [PRIMARY]
 
--- É¾³ıµ¥ÁĞË÷Òı iCategory_Payment¡¢iGCRecord_Payment¡¢iPayee_Payment¡¢iPayer_Payment¡¢iProject_Payment
+-- åˆ é™¤å•åˆ—ç´¢å¼• iCategory_Paymentã€iGCRecord_Paymentã€iPayee_Paymentã€iPayer_Paymentã€iProject_Payment
 DROP INDEX iCategory_Payment ON dbo.Payment
 DROP INDEX iGCRecord_Payment ON dbo.Payment
 DROP INDEX iPayee_Payment ON dbo.Payment

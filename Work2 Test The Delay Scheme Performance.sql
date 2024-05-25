@@ -1,7 +1,7 @@
--- ¿ªÆôÊ±¼äÍ³¼Æ    
+-- å¼€å¯æ—¶é—´ç»Ÿè®¡    
 SET STATISTICS TIME ON;     
     
--- ²åÈë´óÁ¿Êı¾İ    
+-- æ’å…¥å¤§é‡æ•°æ®    
 DECLARE @startTime DATETIME = GETDATE();    
 -- Insert Payment data
 PRINT 'Start Insert Payment data';
@@ -13,7 +13,7 @@ PRINT 'Start Insert Payment data';
     CROSS JOIN    
         master.sys.all_objects AS Objects2    
     CROSS JOIN    
-        master.sys.all_objects AS Objects3  -- Èç¹ûĞèÒª¸ü¶àĞĞ£¬¿ÉÒÔÔÙ¼ÓCROSS JOIN  
+        master.sys.all_objects AS Objects3  -- å¦‚æœéœ€è¦æ›´å¤šè¡Œï¼Œå¯ä»¥å†åŠ CROSS JOIN  
 )
 
 INSERT INTO dbo.Payment (Oid, Amount, Category, Project, Payer, Payee, Date, OptimisticLockField, GCRecord)  
@@ -30,9 +30,9 @@ SELECT
 FROM    
     Numbers    
 WHERE    
-    RowNum BETWEEN 1 AND 40000; -- Éú³É40,000Ìõ²âÊÔÖ§¸¶¼ÇÂ¼  
+    RowNum BETWEEN 1 AND 40000; -- ç”Ÿæˆ40,000æ¡æµ‹è¯•æ”¯ä»˜è®°å½•  
   
 PRINT 'test insert data';         
     
 DECLARE @endTime DATETIME = GETDATE();    
-PRINT '§£§ã§ä§Ñ§Ó§Ü§Ñ §Ù§Ñ§ß§Ú§Ş§Ñ§Ö§ä(²åÈëºÄÊ±): ' + CAST(DATEDIFF(MILLISECOND, @startTime, @endTime) / 1000.0 AS NVARCHAR) + ' s';  -- ĞŞ¸ÄÕâÀï£¬½«ºÁÃëÊı³ıÒÔ1000µÃµ½ÃëÊı 
+PRINT 'Ğ’ÑÑ‚Ğ°Ğ²ĞºĞ° Ğ·Ğ°Ğ½Ğ¸Ğ¼Ğ°ĞµÑ‚(æ’å…¥è€—æ—¶): ' + CAST(DATEDIFF(MILLISECOND, @startTime, @endTime) / 1000.0 AS NVARCHAR) + ' s';  -- ä¿®æ”¹è¿™é‡Œï¼Œå°†æ¯«ç§’æ•°é™¤ä»¥1000å¾—åˆ°ç§’æ•° 
